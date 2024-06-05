@@ -21,7 +21,6 @@ config/icon="res://NESCC.png"
 window/size/viewport_width=512
 window/size/viewport_height=512
 window/size/resizable=false
-window/size/borderless=true
 
 [dotnet]
 

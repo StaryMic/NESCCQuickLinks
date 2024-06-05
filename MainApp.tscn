@@ -157,15 +157,15 @@ clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 mouse_default_cursor_shape = 2
-current_tab = 1
 use_hidden_tabs_for_min_size = true
 
 [node name="About" type="TabContainer" parent="VBoxContainer/TabContainer"]
-visible = false
 layout_mode = 2
 mouse_default_cursor_shape = 2
+current_tab = 1
 
 [node name="Thanks" type="VBoxContainer" parent="VBoxContainer/TabContainer/About"]
+visible = false
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/TabContainer/About/Thanks"]
@@ -183,7 +183,6 @@ This program was my quick solution to that problem, and I hope that it can help 
 fit_content = true
 
 [node name="Contact" type="VBoxContainer" parent="VBoxContainer/TabContainer/About"]
-visible = false
 layout_mode = 2
 
 [node name="ContactInfo" type="RichTextLabel" parent="VBoxContainer/TabContainer/About/Contact"]
@@ -206,7 +205,7 @@ fit_content = true
 
 [node name="PersonalEmail" type="RichTextLabel" parent="VBoxContainer/TabContainer/About/Contact"]
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
 theme_override_font_sizes/normal_font_size = 24
@@ -253,6 +252,7 @@ Source code can be found here: [LINK GOES HERE WHEN PUBLISHED]"
 autowrap_mode = 2
 
 [node name="College Links" type="GridContainer" parent="VBoxContainer/TabContainer"]
+visible = false
 clip_contents = true
 custom_minimum_size = Vector2(512, 0)
 layout_mode = 2
@@ -269,6 +269,9 @@ layout_mode = 2
 clip_contents = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.662452, 0.662452, 0.662452, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 text = "Northeast
 State Website"
 flat = true
@@ -287,6 +290,9 @@ layout_mode = 2
 clip_contents = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.662452, 0.662452, 0.662452, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 text = "Email
 (Outlook)"
 flat = true
@@ -305,6 +311,9 @@ layout_mode = 2
 clip_contents = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.662745, 0.662745, 0.662745, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 text = "Student
 Homepage"
 flat = true
@@ -323,6 +332,9 @@ layout_mode = 2
 clip_contents = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.662745, 0.662745, 0.662745, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 text = "Office 365"
 flat = true
 text_overrun_behavior = 3
@@ -341,6 +353,9 @@ clip_contents = true
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.662745, 0.662745, 0.662745, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 text = "MyNE
 (Student Dash)"
 flat = true
@@ -359,6 +374,9 @@ layout_mode = 2
 clip_contents = true
 layout_mode = 2
 mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.662745, 0.662745, 0.662745, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
 text = "Handshake
 ( Job search )"
 flat = true
