@@ -13,5 +13,9 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
 # Remove Builds folder
 Builds/
+
+# Remove addons folder
+/addons/MaxSizeContainer/
