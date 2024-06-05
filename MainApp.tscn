@@ -1,0 +1,409 @@
+[gd_scene load_steps=15 format=3 uid="uid://cdwjvscbt88bl"]
+
+[ext_resource type="Shader" uid="uid://d03gwgossmr21" path="res://BackgroundVisualShader.tres" id="1_bjjcr"]
+[ext_resource type="Script" path="res://Scripts/AutoURLButton.cs" id="2_6510c"]
+[ext_resource type="Shader" uid="uid://b75hqhovpp82c" path="res://Scripts/IntroShaderWipe.tres" id="3_04gxl"]
+
+[sub_resource type="GDScript" id="GDScript_7646q"]
+resource_name = "CloseApp"
+script/source = "extends Control
+
+func _input(event):
+	if event.is_action(\"ui_cancel\"):
+		get_tree().quit()
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lbdqu"]
+shader = ExtResource("1_bjjcr")
+shader_parameter/TimeDilation = 0.25
+shader_parameter/YOffset = 4.75e-08
+
+[sub_resource type="Gradient" id="Gradient_rjlfc"]
+colors = PackedColorArray(0, 0.513726, 0.431373, 1, 0, 0.278431, 0.419608, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7jfh0"]
+noise_type = 2
+frequency = 0.0135
+fractal_type = 3
+fractal_octaves = 3
+fractal_lacunarity = 0.0
+fractal_gain = 0.0
+cellular_return_type = 5
+domain_warp_type = 2
+domain_warp_amplitude = 21.25
+metadata/_preview_in_3d_space_ = true
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lnjl5"]
+color_ramp = SubResource("Gradient_rjlfc")
+noise = SubResource("FastNoiseLite_7jfh0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xolyu"]
+shader = ExtResource("3_04gxl")
+shader_parameter/TimeDilation = 1.0
+shader_parameter/WaveWidth = 8.762
+shader_parameter/YOffset = -1.1
+
+[sub_resource type="Animation" id="Animation_ygy7a"]
+resource_name = "IntroFadeOutAnim"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/YOffset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8, 1, 1.5, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.5, -0.45, -0.35, -0.45, -1.5]
+}
+
+[sub_resource type="Animation" id="Animation_tqy0k"]
+resource_name = "IntroFadeOutAnim_2"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/YOffset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.5, -1.1]
+}
+
+[sub_resource type="Animation" id="Animation_hoxa4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("ShaderMaterial_xolyu")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_oia7n"]
+_data = {
+"IntroFadeOutAnim": SubResource("Animation_ygy7a"),
+"IntroFadeOutAnim_2": SubResource("Animation_tqy0k"),
+"RESET": SubResource("Animation_hoxa4")
+}
+
+[sub_resource type="GDScript" id="GDScript_od1jv"]
+resource_name = "PlayAnimOnLoadThenDie"
+script/source = "extends AnimationPlayer
+
+func _ready():
+	self.play(\"IntroFadeOutAnim_2\")
+	self.animation_finished.connect(die)
+
+func die(notused:String):
+	self.get_parent().queue_free()
+"
+
+[node name="Node2D" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_7646q")
+
+[node name="Background" type="TextureRect" parent="."]
+texture_filter = 4
+material = SubResource("ShaderMaterial_lbdqu")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_lnjl5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(512, 512)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/shadow_outline_size = 3
+theme_override_constants/outline_size = 5
+bbcode_enabled = true
+text = "[center]Welcome to
+NESCC Quicklinks"
+fit_content = true
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+mouse_default_cursor_shape = 2
+current_tab = 1
+use_hidden_tabs_for_min_size = true
+
+[node name="About" type="TabContainer" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+mouse_default_cursor_shape = 2
+
+[node name="Thanks" type="VBoxContainer" parent="VBoxContainer/TabContainer/About"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/TabContainer/About/Thanks"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Thank you for checking out my software![/center]
+
+No really though. Thank you. I made this in a couple hours as a quick project for my own sanity.
+
+I'm a man of organization but my bookmarks on Firefox were so bad I just needed a quick launcher for all the links for the upcoming year.
+
+This program was my quick solution to that problem, and I hope that it can help you too!
+
+[center] Once again, thank you! <3[/center]"
+fit_content = true
+
+[node name="Contact" type="VBoxContainer" parent="VBoxContainer/TabContainer/About"]
+visible = false
+layout_mode = 2
+
+[node name="ContactInfo" type="RichTextLabel" parent="VBoxContainer/TabContainer/About/Contact"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/normal_font_size = 22
+bbcode_enabled = true
+text = "[center]Found a bug? Missing Link? Want to complain?
+Here is my contact information!"
+fit_content = true
+
+[node name="Note" type="RichTextLabel" parent="VBoxContainer/TabContainer/About/Contact"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+bbcode_enabled = true
+text = "[center](Click to open in your default mail app)"
+fit_content = true
+
+[node name="PersonalEmail" type="RichTextLabel" parent="VBoxContainer/TabContainer/About/Contact"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "[center]Alexander.r.elledge@gmail.com"
+fit_content = true
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer/TabContainer/About/Contact/PersonalEmail"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+underline = 2
+uri = "mailto:alexander.r.elledge@gmail.com"
+
+[node name="Legal" type="VBoxContainer" parent="VBoxContainer/TabContainer/About"]
+visible = false
+layout_mode = 2
+
+[node name="Legal Boring Shit" type="ScrollContainer" parent="VBoxContainer/TabContainer/About/Legal"]
+custom_minimum_size = Vector2(0, 256)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TabContainer/About/Legal/Legal Boring Shit"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/About/Legal/Legal Boring Shit/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+text = "Boring legal stuff noone reads.
+
+This application is not affiliated with Northeast State Community College in any way, shape, or form. It is simply an application made by a NESCC student for other NESCC students.
+
+This application is completely open source and the source code can be found at the bottom of the legal jargon page. All that I ask is that if you recompile or use any of the code from this project, please credit me and email me saying good job or something idk.
+
+Source code can be found here: [LINK GOES HERE WHEN PUBLISHED]"
+autowrap_mode = 2
+
+[node name="College Links" type="GridContainer" parent="VBoxContainer/TabContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(512, 0)
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 2
+columns = 4
+
+[node name="CollegeSite" type="PanelContainer" parent="VBoxContainer/TabContainer/College Links"]
+clip_contents = true
+custom_minimum_size = Vector2(123, 128)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/College Links/CollegeSite"]
+clip_contents = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Northeast
+State Website"
+flat = true
+text_overrun_behavior = 3
+clip_text = true
+icon_alignment = 1
+script = ExtResource("2_6510c")
+_url = "https://northeaststate.edu"
+
+[node name="Email" type="PanelContainer" parent="VBoxContainer/TabContainer/College Links"]
+clip_contents = true
+custom_minimum_size = Vector2(123, 128)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/College Links/Email"]
+clip_contents = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Email
+(Outlook)"
+flat = true
+text_overrun_behavior = 3
+clip_text = true
+icon_alignment = 1
+script = ExtResource("2_6510c")
+_url = "https://myne.northeaststate.edu/home/office365/0oa3p1q9oc7K2DeKX697/30781"
+
+[node name="DegreeWorks" type="PanelContainer" parent="VBoxContainer/TabContainer/College Links"]
+clip_contents = true
+custom_minimum_size = Vector2(123, 128)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/College Links/DegreeWorks"]
+clip_contents = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Student
+Homepage"
+flat = true
+text_overrun_behavior = 3
+clip_text = true
+icon_alignment = 1
+script = ExtResource("2_6510c")
+_url = "https://lp5.northeaststate.edu/web/home-community"
+
+[node name="Office 365" type="PanelContainer" parent="VBoxContainer/TabContainer/College Links"]
+clip_contents = true
+custom_minimum_size = Vector2(123, 128)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/College Links/Office 365"]
+clip_contents = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Office 365"
+flat = true
+text_overrun_behavior = 3
+clip_text = true
+icon_alignment = 1
+script = ExtResource("2_6510c")
+_url = "https://myne.northeaststate.edu/home/office365/0oa3p1q9oc7K2DeKX697/2161"
+
+[node name="MyNE" type="PanelContainer" parent="VBoxContainer/TabContainer/College Links"]
+clip_contents = true
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/College Links/MyNE"]
+clip_contents = true
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "MyNE
+(Student Dash)"
+flat = true
+text_overrun_behavior = 3
+clip_text = true
+icon_alignment = 1
+script = ExtResource("2_6510c")
+_url = "https://myne.northeaststate.edu"
+
+[node name="HandShake" type="PanelContainer" parent="VBoxContainer/TabContainer/College Links"]
+clip_contents = true
+custom_minimum_size = Vector2(123, 128)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/College Links/HandShake"]
+clip_contents = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Handshake
+( Job search )"
+flat = true
+text_overrun_behavior = 3
+clip_text = true
+icon_alignment = 1
+script = ExtResource("2_6510c")
+_url = "https://joinhandshake.com/"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+offset_right = 153.0
+offset_bottom = 23.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 3
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 5
+text = "Press [ESC] to exit"
+uppercase = true
+
+[node name="IntroWipe" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="IntroWipe"]
+texture_filter = 2
+material = SubResource("ShaderMaterial_xolyu")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.172833, 0.172833, 0.172833, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="IntroWipe"]
+libraries = {
+"": SubResource("AnimationLibrary_oia7n")
+}
+script = SubResource("GDScript_od1jv")
