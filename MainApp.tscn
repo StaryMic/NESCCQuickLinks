@@ -157,9 +157,11 @@ clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
 mouse_default_cursor_shape = 2
+current_tab = 1
 use_hidden_tabs_for_min_size = true
 
 [node name="About" type="TabContainer" parent="VBoxContainer/TabContainer"]
+visible = false
 layout_mode = 2
 mouse_default_cursor_shape = 2
 current_tab = 1
@@ -252,7 +254,6 @@ Source code can be found here: [LINK GOES HERE WHEN PUBLISHED]"
 autowrap_mode = 2
 
 [node name="College Links" type="GridContainer" parent="VBoxContainer/TabContainer"]
-visible = false
 clip_contents = true
 custom_minimum_size = Vector2(512, 0)
 layout_mode = 2
@@ -302,27 +303,6 @@ icon_alignment = 1
 script = ExtResource("2_6510c")
 _url = "https://myne.northeaststate.edu/home/office365/0oa3p1q9oc7K2DeKX697/30781"
 
-[node name="DegreeWorks" type="PanelContainer" parent="VBoxContainer/TabContainer/College Links"]
-clip_contents = true
-custom_minimum_size = Vector2(123, 128)
-layout_mode = 2
-
-[node name="Button" type="Button" parent="VBoxContainer/TabContainer/College Links/DegreeWorks"]
-clip_contents = true
-layout_mode = 2
-mouse_default_cursor_shape = 2
-theme_override_colors/font_color = Color(0.662745, 0.662745, 0.662745, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
-text = "Student
-Homepage"
-flat = true
-text_overrun_behavior = 3
-clip_text = true
-icon_alignment = 1
-script = ExtResource("2_6510c")
-_url = "https://lp5.northeaststate.edu/web/home-community"
-
 [node name="Office 365" type="PanelContainer" parent="VBoxContainer/TabContainer/College Links"]
 clip_contents = true
 custom_minimum_size = Vector2(123, 128)
@@ -342,28 +322,6 @@ clip_text = true
 icon_alignment = 1
 script = ExtResource("2_6510c")
 _url = "https://myne.northeaststate.edu/home/office365/0oa3p1q9oc7K2DeKX697/2161"
-
-[node name="MyNE" type="PanelContainer" parent="VBoxContainer/TabContainer/College Links"]
-clip_contents = true
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-
-[node name="Button" type="Button" parent="VBoxContainer/TabContainer/College Links/MyNE"]
-clip_contents = true
-custom_minimum_size = Vector2(128, 128)
-layout_mode = 2
-mouse_default_cursor_shape = 2
-theme_override_colors/font_color = Color(0.662745, 0.662745, 0.662745, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
-text = "MyNE
-(Student Dash)"
-flat = true
-text_overrun_behavior = 3
-clip_text = true
-icon_alignment = 1
-script = ExtResource("2_6510c")
-_url = "https://myne.northeaststate.edu"
 
 [node name="HandShake" type="PanelContainer" parent="VBoxContainer/TabContainer/College Links"]
 clip_contents = true
@@ -385,6 +343,69 @@ clip_text = true
 icon_alignment = 1
 script = ExtResource("2_6510c")
 _url = "https://joinhandshake.com/"
+
+[node name="DegreeWorks" type="PanelContainer" parent="VBoxContainer/TabContainer/College Links"]
+clip_contents = true
+custom_minimum_size = Vector2(123, 128)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/College Links/DegreeWorks"]
+clip_contents = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.662745, 0.662745, 0.662745, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+text = "Student
+Account"
+flat = true
+text_overrun_behavior = 3
+clip_text = true
+icon_alignment = 1
+script = ExtResource("2_6510c")
+_url = "https://lp5.northeaststate.edu/web/home-community"
+
+[node name="MyNE" type="PanelContainer" parent="VBoxContainer/TabContainer/College Links"]
+clip_contents = true
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/College Links/MyNE"]
+clip_contents = true
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.662745, 0.662745, 0.662745, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+text = "Student Apps"
+flat = true
+text_overrun_behavior = 3
+clip_text = true
+icon_alignment = 1
+script = ExtResource("2_6510c")
+_url = "https://myne.northeaststate.edu"
+
+[node name="Payment" type="PanelContainer" parent="VBoxContainer/TabContainer/College Links"]
+clip_contents = true
+custom_minimum_size = Vector2(123, 128)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/TabContainer/College Links/Payment"]
+clip_contents = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_colors/font_color = Color(0.662745, 0.662745, 0.662745, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 1, 1)
+text = "Student
+E-Pay"
+flat = true
+text_overrun_behavior = 3
+clip_text = true
+icon_alignment = 1
+script = ExtResource("2_6510c")
+_url = "https://epay.northeaststate.edu/C20151_tsa/web/welcome.jsp"
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
